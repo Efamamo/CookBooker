@@ -22,11 +22,11 @@ var recipes = []Recipe{
 		Title:       "Spaghetti Bolognese",
 		Ingredients: "Spaghetti, ground beef, tomato sauce, onion, garlic, olive oil, salt, pepper",
 		Instructions: []string{
-			"1. Cook the spaghetti.",
-			"2. Sauté the onion and garlic in olive oil.",
-			"3. Add the ground beef and cook until browned.",
-			"4. Stir in the tomato sauce and let simmer.",
-			" 5. Serve the sauce over the spaghetti."},
+			"Cook the spaghetti.",
+			"Sauté the onion and garlic in olive oil.",
+			"Add the ground beef and cook until browned.",
+			"Stir in the tomato sauce and let simmer.",
+			"Serve the sauce over the spaghetti."},
 		ImageURL: "../assets/spaghetti.avif",
 	},
 	{
@@ -34,11 +34,11 @@ var recipes = []Recipe{
 		Title:       "Chicken Curry",
 		Ingredients: "Chicken breast, curry powder, coconut milk, onion, garlic, ginger, salt, pepper",
 		Instructions: []string{
-			"1. Sauté the onion, garlic, and ginger in oil.",
-			"2. Add the chicken and cook until browned.",
-			"3. Stir in the curry powder and coconut milk.",
-			"4. Let simmer until the chicken is cooked through.",
-			"5. Serve with rice."},
+			"Sauté the onion, garlic, and ginger in oil.",
+			"Add the chicken and cook until browned.",
+			"Stir in the curry powder and coconut milk.",
+			"Let simmer until the chicken is cooked through.",
+			"Serve with rice."},
 		ImageURL: "../assets/chicken.jpg",
 	},
 	{
@@ -46,9 +46,9 @@ var recipes = []Recipe{
 		Title:       "Vegetable Stir-Fry",
 		Ingredients: "Bell peppers, broccoli, carrots, soy sauce, garlic, ginger, olive oil, salt, pepper",
 		Instructions: []string{
-			"1. Sauté the garlic and ginger in olive oil.",
-			"2. Add the vegetables and stir-fry until tender. ",
-			"3. Stir in the soy sauce. 4. Serve over rice or noodles."},
+			"Sauté the garlic and ginger in olive oil.",
+			"Add the vegetables and stir-fry until tender. ",
+			"Stir in the soy sauce. 4. Serve over rice or noodles."},
 		ImageURL: "../assets/vegitable.webp",
 	},
 	{
@@ -56,10 +56,10 @@ var recipes = []Recipe{
 		Title:       "Pancakes",
 		Ingredients: "Flour, eggs, milk, sugar, baking powder, salt, butter",
 		Instructions: []string{
-			"1. Mix the dry ingredients.",
-			"2. Add the wet ingredients and stir until combined.",
-			"3. Heat a pan and cook the pancakes until golden brown on each side.",
-			"4. Serve with syrup or your favorite toppings."},
+			"Mix the dry ingredients.",
+			"Add the wet ingredients and stir until combined.",
+			"Heat a pan and cook the pancakes until golden brown on each side.",
+			"Serve with syrup or your favorite toppings."},
 		ImageURL: "../assets/pancakes.webp",
 	},
 	{
@@ -67,10 +67,10 @@ var recipes = []Recipe{
 		Title:       "Caesar Salad",
 		Ingredients: "Romaine lettuce, Caesar dressing, croutons, Parmesan cheese, lemon juice, olive oil, salt, pepper",
 		Instructions: []string{
-			"1. Chop the lettuce and place in a bowl.",
-			"2. Toss with Caesar dressing.",
-			"3. Add croutons and Parmesan cheese.",
-			"4. Drizzle with lemon juice and olive oil. 5. Season with salt and pepper to taste."},
+			"Chop the lettuce and place in a bowl.",
+			"Toss with Caesar dressing.",
+			"Add croutons and Parmesan cheese.",
+			"Drizzle with lemon juice and olive oil. 5. Season with salt and pepper to taste."},
 		ImageURL: "../assets/Caesar.jpg",
 	},
 	{
@@ -78,10 +78,10 @@ var recipes = []Recipe{
 		Title:       "Beef Tacos",
 		Ingredients: "Ground beef, taco seasoning, taco shells, lettuce, tomato, cheese, sour cream",
 		Instructions: []string{
-			"1. Cook the ground beef with taco seasoning.",
-			"2. Fill taco shells with the beef mixture.",
-			"3. Top with lettuce, tomato, cheese, and sour cream.",
-			"4. Serve immediately.",
+			"Cook the ground beef with taco seasoning.",
+			"Fill taco shells with the beef mixture.",
+			"Top with lettuce, tomato, cheese, and sour cream.",
+			"Serve immediately.",
 		},
 		ImageURL: "../assets/tacos.jpg",
 	},
@@ -90,11 +90,11 @@ var recipes = []Recipe{
 		Title:       "Greek Yogurt Parfait",
 		Ingredients: "Greek yogurt, honey, granola, mixed berries",
 		Instructions: []string{
-			"1. Layer Greek yogurt in a glass.",
-			"2. Drizzle with honey.",
-			"3. Add a layer of granola.",
-			"4. Top with mixed berries.",
-			"5. Repeat layers as desired.",
+			"Layer Greek yogurt in a glass.",
+			"Drizzle with honey.",
+			"Add a layer of granola.",
+			"Top with mixed berries.",
+			"Repeat layers as desired.",
 		},
 		ImageURL: "../assets/Yogurt.avif",
 	},
@@ -103,12 +103,12 @@ var recipes = []Recipe{
 		Title:       "Margherita Pizza",
 		Ingredients: "Pizza dough, tomato sauce, mozzarella cheese, fresh basil, olive oil, salt",
 		Instructions: []string{
-			"1. Preheat oven to 475°F (245°C).",
-			"2. Roll out pizza dough on a floured surface.",
-			"3. Spread tomato sauce evenly over the dough.",
-			"4. Sprinkle mozzarella cheese on top.",
-			"5. Bake in the oven for 10-12 minutes.",
-			"6. Garnish with fresh basil and a drizzle of olive oil.",
+			"Preheat oven to 475°F (245°C).",
+			"Roll out pizza dough on a floured surface.",
+			"Spread tomato sauce evenly over the dough.",
+			"Sprinkle mozzarella cheese on top.",
+			"Bake in the oven for 10-12 minutes.",
+			"Garnish with fresh basil and a drizzle of olive oil.",
 		},
 		ImageURL: "../assets/pizza.jpg",
 	},
@@ -117,10 +117,10 @@ var recipes = []Recipe{
 		Title:       "Lemonade",
 		Ingredients: "Lemon juice, sugar, water, ice",
 		Instructions: []string{
-			"1. In a pitcher, combine lemon juice and sugar.",
-			"2. Stir until the sugar is dissolved.",
-			"3. Add water and mix well.",
-			"4. Serve over ice.",
+			"In a pitcher, combine lemon juice and sugar.",
+			"Stir until the sugar is dissolved.",
+			"Add water and mix well.",
+			"Serve over ice.",
 		},
 		ImageURL: "../assets/lemonade.jpg",
 	},
@@ -262,6 +262,25 @@ func main() {
 		recipes = append(recipes, newRecipe)
 
 		c.HTML(http.StatusOK, "recipie.html", newRecipe)
+
+	})
+
+	r.DELETE("/recipes/:id", func(c *gin.Context) {
+		id := c.Param("id")
+		Id, err := strconv.Atoi(id)
+		if err == nil {
+			idx := -1
+			for i, val := range recipes {
+				if val.ID == Id {
+					idx = i
+				}
+			}
+			if idx != -1 {
+				recipes = append(recipes[:idx], recipes[idx+1:]...)
+				c.HTML(http.StatusOK, "recipies.html", recipes)
+			}
+
+		}
 
 	})
 

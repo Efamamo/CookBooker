@@ -1,4 +1,4 @@
-<form hx-post="/recipes" hx-swap="beforeend" hx-target=".indiv" class="max-w-4xl mx-auto my-12 bg-white rounded-lg shadow-md p-6" enctype="multipart/form-data">
+<form hx-post="/recipes" hx-on:htmx:after-request="document.querySelector('form').reset()" hx-swap="beforeend" hx-target=".indiv" class="max-w-4xl mx-auto my-12 bg-white rounded-lg shadow-md p-6" enctype="multipart/form-data">
     <div class="flex flex-col gap-6">
         <div class="flex flex-col md:flex-row gap-6">
             <div class="flex-1">
@@ -8,6 +8,7 @@
                     name="image"
                     id="image"
                     class="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
                 />
             </div>
             <div class="flex-1">
@@ -18,6 +19,7 @@
                     id="title"
                     placeholder="Enter title"
                     class="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
                 />
             </div>
         </div>
@@ -31,6 +33,7 @@
                     id="ingredients"
                     placeholder="Enter ingredients"
                     class="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
                 />
             </div>
         </div>
@@ -45,6 +48,7 @@
                         name="instructions[0]"
                         placeholder="Enter instruction"
                         class="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        required
                     />
                 </li>
                 <li>
@@ -53,6 +57,7 @@
                         name="instructions[1]"
                         placeholder="Enter instruction"
                         class="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        required
                     />
                 </li>
                 <li>
@@ -77,6 +82,7 @@
                         name="instructions[4]"
                         placeholder="Enter instruction"
                         class="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        
                     />
                 </li>
                

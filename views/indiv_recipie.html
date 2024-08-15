@@ -15,12 +15,19 @@
 
   <div>
     <h3 class="text-center"><strong>Instructions</strong></h3>
-    <ul class="pl-5">
+    <ol class="pl-5 list-decimal">
       {{range .Instructions}}
       <li>{{.}}</li>
       {{end}}
-    </ul>
-    <button class="bg-red-500 px-6 py-3 mb-8 mt-16 block mx-auto text-white font-semibold rounded-lg shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-blue-500">Delete</button>
-
+    </ol>
+    <button
+      onclick="event.stopPropagation();"
+      hx-delete="/recipes/{{.ID}}"
+      hx-target=".cont"
+      hx-swap="outerHTML"
+      class="bg-red-500 px-6 py-3 mb-8 mt-16 block mx-auto text-white font-semibold rounded-lg shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    >
+      Delete
+    </button>
   </div>
 </div>
