@@ -1,11 +1,17 @@
 package main
 
 import (
+	"context"
+	"log"
 	"net/http"
 	"path/filepath"
 	"strconv"
+	"time"
 
 	"github.com/gin-gonic/gin"
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 type Recipe struct {
@@ -137,6 +143,14 @@ func GetRecipeById(id int) *Recipe {
 }
 
 func main() {
+	clientOptions := options.Client().ApplyURI("mongodb://localhost:27017")
+	var err error
+	client, err := mongo.Connect(context.TODO(), clientOptions)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	userCollection := client.Database("recipe-hub").Collection("recipes")
 
 	r := gin.Default()
 	r.Static("/assets", "./assets")
@@ -150,6 +164,34 @@ func main() {
 	})
 
 	r.GET("/recipies", func(c *gin.Context) {
+		ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+		defer cancel()
+
+		cur, e := userCollection.Find(ctx, bson.D{})
+		if e != nil {
+			c.IndentedJSON(500, gin.H{"error": "Server Error"})
+			return
+		}
+
+		recipes := make([]Recipe, 0)
+		for cur.Next(ctx) {
+			var recipe Recipe
+
+			e := cur.Decode(&recipe)
+
+			if e != nil {
+				c.IndentedJSON(500, gin.H{"error": "Server Error"})
+				return
+			}
+			recipes = append(recipes, recipe)
+		}
+
+		if cur.Err() != nil {
+			c.IndentedJSON(500, gin.H{"error": "Server Error"})
+		}
+
+		cur.Close(ctx)
+
 		c.HTML(http.StatusOK, "recipies.html", recipes)
 	})
 
@@ -158,23 +200,45 @@ func main() {
 	})
 
 	r.GET("/recipie/:id", func(c *gin.Context) {
-		id := c.Param("id")
-		Id, err := strconv.Atoi(id)
-		if err == nil {
-			recipe := GetRecipeById(Id)
-			c.HTML(http.StatusOK, "indiv_recipie.html", *recipe)
+		id, _ := strconv.Atoi(c.Param("id"))
+		ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+		defer cancel()
 
+		filter := bson.M{"_id": id}
+
+		var recipe Recipe
+		e := userCollection.FindOne(ctx, filter).Decode(&recipe)
+		if e != nil {
+			if e == mongo.ErrNoDocuments {
+				c.IndentedJSON(404, gin.H{"error": "recipe not found"})
+				return
+			}
+			c.IndentedJSON(500, gin.H{"error": "server error"})
 		}
+
+		c.HTML(http.StatusOK, "indiv_recipie.html", recipe)
 
 	})
 
 	r.GET("/recipes/edit/:id", func(c *gin.Context) {
-		id := c.Param("id")
-		Id, err := strconv.Atoi(id)
-		if err == nil {
-			recipe := GetRecipeById(Id)
-			c.HTML(http.StatusOK, "edit_recipie.html", recipe)
+		id, _ := strconv.Atoi(c.Param("id"))
+		ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+		defer cancel()
+
+		filter := bson.M{"_id": id}
+
+		var recipe Recipe
+		e := userCollection.FindOne(ctx, filter).Decode(&recipe)
+		if e != nil {
+			if e == mongo.ErrNoDocuments {
+				c.IndentedJSON(404, gin.H{"error": "recipe not found"})
+				return
+			}
+			c.IndentedJSON(500, gin.H{"error": "server error"})
 		}
+
+		c.HTML(http.StatusOK, "edit_recipie.html", recipe)
+
 	})
 
 	r.PUT("/recipes/:id", func(c *gin.Context) {
@@ -184,45 +248,66 @@ func main() {
 			return
 		}
 
-		recipe := GetRecipeById(id)
-		if recipe != nil {
-			recipe.ID = id
-			recipe.Title = c.PostForm("title")
-			recipe.Ingredients = c.PostForm("ingredients")
+		ID := id
+		Title := c.PostForm("title")
+		Ingredients := c.PostForm("ingredients")
 
-			var instructions []string
-			for i := 0; ; i++ {
-				instruction := c.PostForm("instructions[" + strconv.Itoa(i) + "]")
-				if instruction == "" {
-					break
-				}
-				instructions = append(instructions, instruction)
+		var instructions []string
+		for i := 0; ; i++ {
+			instruction := c.PostForm("instructions[" + strconv.Itoa(i) + "]")
+			if instruction == "" {
+				break
 			}
-			recipe.Instructions = instructions
-
-			file, err := c.FormFile("image")
-
-			if err != nil {
-				c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-				return
-			}
-
-			filename := filepath.Base(file.Filename)
-			filepath := filepath.Join("assets", filename)
-
-			if err := c.SaveUploadedFile(file, filepath); err != nil {
-				c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-				return
-			}
-
-			recipe.ImageURL = "/" + filepath
-
-			c.HTML(http.StatusOK, "indiv_recipie.html", *recipe)
+			instructions = append(instructions, instruction)
 		}
+		Instructions := instructions
+
+		file, err := c.FormFile("image")
+
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+
+		filename := filepath.Base(file.Filename)
+		filepath := filepath.Join("assets", filename)
+
+		if err := c.SaveUploadedFile(file, filepath); err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+
+		ImageURL := "/" + filepath
+
+		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+		defer cancel()
+
+		filter := bson.M{"_id": ID}
+
+		update := bson.M{
+			"$set": bson.M{
+				"title":        Title,
+				"ingredients":  Ingredients,
+				"instructions": Instructions,
+				"image":        ImageURL,
+			},
+		}
+
+		_, e := userCollection.UpdateOne(ctx, filter, update)
+		if e != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+
+		recipe := GetRecipeById(ID)
+
+		c.HTML(http.StatusOK, "indiv_recipie.html", recipe)
+
 	})
 
 	r.POST("/recipes", func(c *gin.Context) {
-
+		ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+		defer cancel()
 		if err := c.Request.ParseForm(); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
@@ -260,28 +345,36 @@ func main() {
 
 		newRecipe.ImageURL = "/" + filepath
 
-		recipes = append(recipes, newRecipe)
+		newRecipe.ID = 10
 
+		_, e := userCollection.InsertOne(ctx, newRecipe)
+
+		if e != nil {
+			c.IndentedJSON(500, gin.H{"error": "Server Error"})
+			return
+		}
 		c.HTML(http.StatusOK, "recipie.html", newRecipe)
 
 	})
 
 	r.DELETE("/recipes/:id", func(c *gin.Context) {
-		id := c.Param("id")
-		Id, err := strconv.Atoi(id)
-		if err == nil {
-			idx := -1
-			for i, val := range recipes {
-				if val.ID == Id {
-					idx = i
-				}
-			}
-			if idx != -1 {
-				recipes = append(recipes[:idx], recipes[idx+1:]...)
-				c.Redirect(http.StatusFound, "/recipies")
-			}
 
+		ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+		defer cancel()
+		id := c.Param("id")
+		Id, _ := strconv.Atoi(id)
+
+		filter := bson.M{"_id": Id}
+
+		// Delete the document that matches the filter
+		_, e := userCollection.DeleteOne(ctx, filter)
+
+		if e != nil {
+			c.IndentedJSON(500, gin.H{"error": "Server Error"})
+			return
 		}
+
+		c.Redirect(http.StatusFound, "/recipies")
 
 	})
 
