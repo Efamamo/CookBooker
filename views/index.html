@@ -6,7 +6,9 @@
     <title>Document</title>
     <link rel="stylesheet" href="../styles/index.css">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     <script
       src="https://unpkg.com/htmx.org@2.0.2" 
       integrity="sha384-Y7hw+L/jvKeWIRRkqWYfPcvVxHzVzn5REgzbawhxAuQGwX1XWe70vji+VSeHOThJ"
@@ -15,11 +17,12 @@
   </head>
   <body>
     <header>
-        
+        <h1 class="logo">CookBooker</h1>
         <ul>
             <li hx-get="/" hx-swap="outerHTML" hx-target="body" >Home</li>
             <li hx-get="/recipies" hx-swap="outerHTML"  hx-target=".cont">Recipies</li>
         </ul>
+        <div></div>
     </header>
     <div class="cont home-container flex ">
       <img src="../assets/cook.png" alt="cook" />

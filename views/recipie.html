@@ -1,17 +1,19 @@
 <div
-  class="cont my-8 bg-white max-w-screen-lg m-auto rounded shadow-md p-4"
+  class="cont flex justify-center items-center gap-6 my-52 bg-white max-w-screen-lg m-auto rounded shadow-md p-4 cursor-pointer"
 >
   <img
     src="{{.ImageURL}}"
     alt="{{.Title}}"
-    class="w-full h-full object-cover rounded mb-4"
+    class="max-w-screen-sm rounded mb-4"
   />
-  <h2 class="text-xl font-semibold">{{.Title}}</h2>
-  <p><strong>Ingredients:</strong> {{.Ingredients}}</p>
-  <p><strong>Instructions:</strong></p>
-  <ul class="list-disc pl-5">
+  <div>
+    <h2 class="text-xl my-2 text-center font-semibold">{{.Title}}</h2>
+    <p><strong>Ingredients:</strong> {{.Ingredients}}</p>
+    <h3 class="text-center"><strong>Instructions</strong></h3>
+    <ul class="pl-5">
       {{range .Instructions}}
       <li>{{.}}</li>
       {{end}}
-  </ul>
+    </ul>
+  </div>
 </div>

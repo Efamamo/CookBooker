@@ -1,38 +1,54 @@
-body{
-    background-color: whitesmoke;
-}
-header ul{
-    margin-top: 50px;
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    gap: 20px;
+body {
+  background-color: whitesmoke;
 }
 
-header ul li{
-    font-size: 20px;
-    cursor: pointer;
-    font-weight: bold;
-}   
-
-.home-container{
-    margin: 210px auto;
+header{
+    margin: 30px 20px 0 200px;
     display: flex;
+    justify-content: start;
     align-items: center;
-    justify-content: center;
-    gap: 50px;
+
+}
+header ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
 }
 
-.home-container img{
-    width: 20%;
+.logo {
+  font-family: "Great Vibes", cursive;
+  font-size: 2em;
+  font-weight: 500;
+  font-style: normal;
+  margin: 0 500px 0 100px;
+  color: darkred;
 }
 
-.home-container p{
-    width: 50%;
-    line-height: 25px;
-    font-size: 20px;
+header ul li {
+  font-size: 20px;
+  cursor: pointer;
+  font-weight: bold;
 }
 
-footer{
-    bottom: 0;
+.home-container {
+  margin: 210px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+}
+
+.home-container img {
+  width: 20%;
+}
+
+.home-container p {
+  width: 50%;
+  line-height: 25px;
+  font-size: 20px;
+}
+
+footer {
+  bottom: 0;
 }

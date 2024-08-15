@@ -72,6 +72,57 @@ var recipes = []Recipe{
 			"4. Drizzle with lemon juice and olive oil. 5. Season with salt and pepper to taste."},
 		ImageURL: "../assets/Caesar.jpg",
 	},
+	{
+		ID:          6,
+		Title:       "Beef Tacos",
+		Ingredients: "Ground beef, taco seasoning, taco shells, lettuce, tomato, cheese, sour cream",
+		Instructions: []string{
+			"1. Cook the ground beef with taco seasoning.",
+			"2. Fill taco shells with the beef mixture.",
+			"3. Top with lettuce, tomato, cheese, and sour cream.",
+			"4. Serve immediately.",
+		},
+		ImageURL: "../assets/tacos.jpg",
+	},
+	{
+		ID:          7,
+		Title:       "Greek Yogurt Parfait",
+		Ingredients: "Greek yogurt, honey, granola, mixed berries",
+		Instructions: []string{
+			"1. Layer Greek yogurt in a glass.",
+			"2. Drizzle with honey.",
+			"3. Add a layer of granola.",
+			"4. Top with mixed berries.",
+			"5. Repeat layers as desired.",
+		},
+		ImageURL: "../assets/Yogurt.avif",
+	},
+	{
+		ID:          8,
+		Title:       "Margherita Pizza",
+		Ingredients: "Pizza dough, tomato sauce, mozzarella cheese, fresh basil, olive oil, salt",
+		Instructions: []string{
+			"1. Preheat oven to 475°F (245°C).",
+			"2. Roll out pizza dough on a floured surface.",
+			"3. Spread tomato sauce evenly over the dough.",
+			"4. Sprinkle mozzarella cheese on top.",
+			"5. Bake in the oven for 10-12 minutes.",
+			"6. Garnish with fresh basil and a drizzle of olive oil.",
+		},
+		ImageURL: "../assets/pizza.jpg",
+	},
+	{
+		ID:          9,
+		Title:       "Lemonade",
+		Ingredients: "Lemon juice, sugar, water, ice",
+		Instructions: []string{
+			"1. In a pitcher, combine lemon juice and sugar.",
+			"2. Stir until the sugar is dissolved.",
+			"3. Add water and mix well.",
+			"4. Serve over ice.",
+		},
+		ImageURL: "../assets/lemonade.jpg",
+	},
 }
 
 func GetRecipeById(id int) *Recipe {
