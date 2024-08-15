@@ -48,7 +48,8 @@ var recipes = []Recipe{
 		Instructions: []string{
 			"Sauté the garlic and ginger in olive oil.",
 			"Add the vegetables and stir-fry until tender. ",
-			"Stir in the soy sauce. 4. Serve over rice or noodles."},
+			"Stir in the soy sauce.",
+			"Serve over rice or noodles."},
 		ImageURL: "../assets/vegitable.webp",
 	},
 	{
@@ -140,11 +141,11 @@ func main() {
 	r := gin.Default()
 	r.Static("/assets", "./assets")
 	r.Static("/styles", "./styles")
-	r.Static("/images", "./images") // Serve images statically
 
 	r.LoadHTMLGlob("views/*")
 
 	r.GET("/", func(c *gin.Context) {
+
 		c.HTML(http.StatusOK, "index.html", nil)
 	})
 
@@ -207,7 +208,7 @@ func main() {
 			}
 
 			filename := filepath.Base(file.Filename)
-			filepath := filepath.Join("images", filename)
+			filepath := filepath.Join("assets", filename)
 
 			if err := c.SaveUploadedFile(file, filepath); err != nil {
 				c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -250,7 +251,7 @@ func main() {
 		}
 
 		filename := filepath.Base(file.Filename)
-		filepath := filepath.Join("images", filename)
+		filepath := filepath.Join("assets", filename)
 
 		if err := c.SaveUploadedFile(file, filepath); err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -277,7 +278,7 @@ func main() {
 			}
 			if idx != -1 {
 				recipes = append(recipes[:idx], recipes[idx+1:]...)
-				c.HTML(http.StatusOK, "recipies.html", recipes)
+				c.Redirect(http.StatusFound, "/recipies")
 			}
 
 		}
