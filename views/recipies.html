@@ -1,0 +1,12 @@
+<div class="recipies container mx-auto my-24 p-4">
+    <h1 class="text-3xl text-center font-bold mb-6">Recipe List</h1>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {{range .}}
+        <div hx-get="/recipie/{{.ID}}" hx-target=".recipies" hx-swap="outerHTML" class="bg-white rounded shadow-md p-4 m-4 cursor-pointer">
+            <img src="{{.ImageURL}}" alt="{{.Title}}" class="w-full h-80 object-cover rounded mb-4">
+            <h2 class="text-xl font-semibold">{{.Title}}</h2>
+            <p><strong>Ingredients:</strong> {{.Ingredients}}</p>
+        </div>
+        {{end}}
+    </div>
+</div>

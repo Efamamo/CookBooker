@@ -16,8 +16,8 @@ header ul li{
 }   
 
 .home-container{
+    margin: 210px auto;
     display: flex;
-    height: 82vh;
     align-items: center;
     justify-content: center;
     gap: 50px;
@@ -31,4 +31,8 @@ header ul li{
     width: 50%;
     line-height: 25px;
     font-size: 20px;
+}
+
+footer{
+    bottom: 0;
 }

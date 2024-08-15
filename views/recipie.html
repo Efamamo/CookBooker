@@ -1,0 +1,17 @@
+<div
+  class="cont my-8 bg-white max-w-screen-lg m-auto rounded shadow-md p-4"
+>
+  <img
+    src="{{.ImageURL}}"
+    alt="{{.Title}}"
+    class="w-full h-full object-cover rounded mb-4"
+  />
+  <h2 class="text-xl font-semibold">{{.Title}}</h2>
+  <p><strong>Ingredients:</strong> {{.Ingredients}}</p>
+  <p><strong>Instructions:</strong></p>
+  <ul class="list-disc pl-5">
+      {{range .Instructions}}
+      <li>{{.}}</li>
+      {{end}}
+  </ul>
+</div>
