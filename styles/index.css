@@ -29,6 +29,7 @@ header ul li {
   font-size: 20px;
   cursor: pointer;
   font-weight: bold;
+  color: darkblue;
 }
 
 .home-container {
@@ -37,6 +38,11 @@ header ul li {
   align-items: center;
   justify-content: center;
   gap: 50px;
+}
+
+.home-container span{
+    font-size: 20px;
+    color: darkblue;
 }
 
 .home-container img {

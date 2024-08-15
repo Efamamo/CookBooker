@@ -1,0 +1,26 @@
+<div
+  class="cont flex justify-between items-center gap-6 my-52 bg-white max-w-screen-lg m-auto rounded shadow-md p-4 cursor-pointer"
+  hx-get="/recipes/edit/{{.ID}}"
+  hx-swap="outerHTML"
+>
+  <div>
+    <img
+      src="{{.ImageURL}}"
+      alt="{{.Title}}"
+      class="max-w-screen-sm rounded mb-4"
+    />
+    <h2 class="text-xl my-2 font-semibold">{{.Title}}</h2>
+    <p><strong>Ingredients:</strong> {{.Ingredients}}</p>
+  </div>
+
+  <div>
+    <h3 class="text-center"><strong>Instructions</strong></h3>
+    <ul class="pl-5">
+      {{range .Instructions}}
+      <li>{{.}}</li>
+      {{end}}
+    </ul>
+    <button class="bg-red-500 px-6 py-3 mb-8 mt-16 block mx-auto text-white font-semibold rounded-lg shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-blue-500">Delete</button>
+
+  </div>
+</div>

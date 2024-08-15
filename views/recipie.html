@@ -1,19 +1,5 @@
-<div
-  class="cont flex justify-center items-center gap-6 my-52 bg-white max-w-screen-lg m-auto rounded shadow-md p-4 cursor-pointer"
->
-  <img
-    src="{{.ImageURL}}"
-    alt="{{.Title}}"
-    class="max-w-screen-sm rounded mb-4"
-  />
-  <div>
-    <h2 class="text-xl my-2 text-center font-semibold">{{.Title}}</h2>
+<div hx-get="/recipie/{{.ID}}" hx-target=".recipies" hx-swap="outerHTML" class="bg-white rounded shadow-md p-4 m-4 cursor-pointer">
+    <img src="{{.ImageURL}}" alt="{{.Title}}" class="w-full h-60 object-cover rounded mb-4">
+    <h2 class="text-xl font-semibold">{{.Title}}</h2>
     <p><strong>Ingredients:</strong> {{.Ingredients}}</p>
-    <h3 class="text-center"><strong>Instructions</strong></h3>
-    <ul class="pl-5">
-      {{range .Instructions}}
-      <li>{{.}}</li>
-      {{end}}
-    </ul>
-  </div>
 </div>

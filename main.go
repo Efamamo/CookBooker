@@ -2,17 +2,18 @@ package main
 
 import (
 	"net/http"
+	"path/filepath"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
 
 type Recipe struct {
-	ID           int
-	Title        string
-	Ingredients  string
-	Instructions []string
-	ImageURL     string
+	ID           int      `json:"id"`
+	Title        string   `json:"title"`
+	Ingredients  string   `json:"ingredients"`
+	Instructions []string `json:"instructions"`
+	ImageURL     string   `json:"image"`
 }
 
 var recipes = []Recipe{
@@ -139,8 +140,10 @@ func main() {
 	r := gin.Default()
 	r.Static("/assets", "./assets")
 	r.Static("/styles", "./styles")
+	r.Static("/images", "./images") // Serve images statically
 
 	r.LoadHTMLGlob("views/*")
+
 	r.GET("/", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.html", nil)
 	})
@@ -149,14 +152,116 @@ func main() {
 		c.HTML(http.StatusOK, "recipies.html", recipes)
 	})
 
+	r.GET("/form", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "add_form.html", nil)
+	})
+
 	r.GET("/recipie/:id", func(c *gin.Context) {
 		id := c.Param("id")
 		Id, err := strconv.Atoi(id)
 		if err == nil {
 			recipe := GetRecipeById(Id)
-			c.HTML(http.StatusOK, "recipie.html", *recipe)
+			c.HTML(http.StatusOK, "indiv_recipie.html", *recipe)
 
 		}
+
+	})
+
+	r.GET("/recipes/edit/:id", func(c *gin.Context) {
+		id := c.Param("id")
+		Id, err := strconv.Atoi(id)
+		if err == nil {
+			recipe := GetRecipeById(Id)
+			c.HTML(http.StatusOK, "edit_recipie.html", recipe)
+		}
+	})
+
+	r.PUT("/recipes/:id", func(c *gin.Context) {
+		id, _ := strconv.Atoi(c.Param("id"))
+		if err := c.Request.ParseForm(); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+
+		recipe := GetRecipeById(id)
+		if recipe != nil {
+			recipe.ID = id
+			recipe.Title = c.PostForm("title")
+			recipe.Ingredients = c.PostForm("ingredients")
+
+			var instructions []string
+			for i := 0; ; i++ {
+				instruction := c.PostForm("instructions[" + strconv.Itoa(i) + "]")
+				if instruction == "" {
+					break
+				}
+				instructions = append(instructions, instruction)
+			}
+			recipe.Instructions = instructions
+
+			file, err := c.FormFile("image")
+
+			if err != nil {
+				c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+				return
+			}
+
+			filename := filepath.Base(file.Filename)
+			filepath := filepath.Join("images", filename)
+
+			if err := c.SaveUploadedFile(file, filepath); err != nil {
+				c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+				return
+			}
+
+			recipe.ImageURL = "/" + filepath
+
+			c.HTML(http.StatusOK, "indiv_recipie.html", *recipe)
+		}
+	})
+
+	r.POST("/recipes", func(c *gin.Context) {
+
+		if err := c.Request.ParseForm(); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+		var newRecipe Recipe
+
+		newRecipe.ID = len(recipes) + 1
+		newRecipe.Title = c.PostForm("title")
+		newRecipe.Ingredients = c.PostForm("ingredients")
+
+		var instructions []string
+		for i := 0; ; i++ {
+			instruction := c.PostForm("instructions[" + strconv.Itoa(i) + "]")
+			if instruction == "" {
+				break
+			}
+			instructions = append(instructions, instruction)
+		}
+		newRecipe.Instructions = instructions
+
+		file, err := c.FormFile("image")
+
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+
+		filename := filepath.Base(file.Filename)
+		filepath := filepath.Join("images", filename)
+
+		if err := c.SaveUploadedFile(file, filepath); err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+
+		newRecipe.ImageURL = "/" + filepath
+
+		recipes = append(recipes, newRecipe)
+
+		c.HTML(http.StatusOK, "recipie.html", newRecipe)
 
 	})
 
