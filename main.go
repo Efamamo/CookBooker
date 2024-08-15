@@ -12,6 +12,8 @@ type Count struct {
 
 func main() {
 	r := gin.Default()
+	r.Static("/assets", "./assets")
+	r.Static("/styles", "./styles")
 
 	r.LoadHTMLGlob("views/*")
 	count := Count{Count: 0}
