@@ -25,6 +25,11 @@
       integrity="sha384-yZq+5izaUBKcRgFbxgkRYwpHhHHCpp5nseXp0MEQ1A4MTWVMnqkmcuFez8x5qfxr"
       crossorigin="anonymous"
     ></script>
+    <script>
+      document.addEventListener("htmx:afterRequest", function (event) {
+        window.location.href = response.redirect;
+      });
+    </script>
   </head>
   <body>
     <header>
@@ -49,7 +54,7 @@
       hx-target="body"
       hx-swap="outerHTML"
       class="cont max-w-4xl mx-auto my-64 bg-white rounded-lg shadow-md p-6"
-      enctype="multipart/form-data"
+      hx-encoding="multipart/form-data"
     >
       <div class="flex gap-6 max-w-screen-md w-full h-[460px] justify-between">
         <div class="flex w-[640] h-[460] flex-col justify-center gap-2">

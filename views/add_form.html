@@ -1,11 +1,13 @@
+
 <div id="overlay">
-  <div hx-on:click="document.getElementById('overlay').style.display = 'none';"  class="fixed inset-0 bg-black bg-opacity-80"></div>
+  <div hx-on:click="document.getElementById('overlay').style.display = 'none';"  class="fixed inset-0 bg-black bg-opacity-70"></div>
   <form
     hx-post="/recipes"
-    hx-on:htmx:after-request="document.getElementById('overlay').style.display = 'none';"
+    hx-on:htmx:afterRequest="document.getElementById('overlay').style.display = 'none';"
     hx-swap="beforeend"
     hx-target=".indiv"
-    class="absolute top-1/5 left-1/3 max-w-4xl mx-auto my-12 bg-white rounded-lg shadow-md p-6"
+    class="absolute top-1/5 left-1/3 max-w-4xl mx-auto my-12 rounded-lg shadow-md p-6"
+    style="background-color: whitesmoke;"
     enctype="multipart/form-data"
   >
     <div class="flex flex-col gap-6">
