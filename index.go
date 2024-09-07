@@ -39,22 +39,3 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	router.ServeHTTP(w, r)
 }
 
-func main() {
-	// For local development or running the app outside Vercel
-	clientOptions := options.Client().ApplyURI("mongodb://localhost:27017")
-	client, err := mongo.Connect(context.TODO(), clientOptions)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	repo := repository.NewRepo(client)
-	usecase := usecase.RecipeUsecase{RecipeRepository: repo}
-	c := controller.RecipeController{RecipeUsecase: usecase}
-
-	router := routes.StartRoute(c)
-
-	// Start Gin server locally
-	if err := router.Run(); err != nil {
-		log.Fatal("Failed to start server: ", err)
-	}
-}
