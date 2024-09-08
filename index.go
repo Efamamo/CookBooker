@@ -1,4 +1,4 @@
-package Handler
+package main
 
 import (
 	"context"
@@ -7,7 +7,6 @@ import (
 	"example/htmx/repository"
 	"example/htmx/usecase"
 	"log"
-	"net/http"
 
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -16,11 +15,11 @@ import (
 var client *mongo.Client
 
 // Handler function for Vercel
-func Handler(w http.ResponseWriter, r *http.Request) {
+func main() {
 	// Initialize MongoDB client if not already done
 	if client == nil {
 		var err error
-		clientOptions := options.Client().ApplyURI("mongodb://localhost:27017")
+		clientOptions := options.Client().ApplyURI("mongodb+srv://nest:efamamo@cluster0.avreuwg.mongodb.net/recipe-hub")
 		client, err = mongo.Connect(context.TODO(), clientOptions)
 		if err != nil {
 			log.Fatal(err)
@@ -33,9 +32,6 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	c := controller.RecipeController{RecipeUsecase: usecase}
 
 	// Setup routes using Gin
-	router := routes.StartRoute(c)
+	routes.StartRoute(c)
 
-	// Serve the request using Gin's ServeHTTP
-	router.ServeHTTP(w, r)
 }
-

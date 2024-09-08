@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func StartRoute(controller controller.RecipeController) *gin.Engine {
+func StartRoute(controller controller.RecipeController) {
 	r := gin.Default()
 	r.Static("/assets", "./assets")
 	r.Static("/styles", "./styles")
@@ -30,6 +30,4 @@ func StartRoute(controller controller.RecipeController) *gin.Engine {
 	r.DELETE("/recipes/:id", controller.DeleteRecipe)
 
 	r.Run()
-
-	return r
 }
