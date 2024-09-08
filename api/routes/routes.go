@@ -29,5 +29,5 @@ func StartRoute(controller controller.RecipeController) {
 
 	r.DELETE("/recipes/:id", controller.DeleteRecipe)
 
-	r.Run()
+	r.Run("localhost:5000")
 }
